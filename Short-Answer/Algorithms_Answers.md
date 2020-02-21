@@ -20,7 +20,7 @@ lowest_break = stories + 1
 highest_unbroken = 0
 
 while lowest_break - highest_unbroken > 1:
-    test_floor = round(lowest_break + highest_unbroken)
+    test_floor = round(0.5(lowest_break + highest_unbroken))
     if did_break(test_floor):
         lowest_break = test_floor
     else:
