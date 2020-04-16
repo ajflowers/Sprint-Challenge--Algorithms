@@ -92,12 +92,97 @@ class SortingRobot:
         """
         return self._light == "ON"
 
+            
+#sorting steps?
+#bubble sort - compares 1 item at time, only immediate neighbors
+#need to run through entire list each pass
+#use light to flag when a swap is made, reset on next pass - done when we make it through the whole way
+#grab an item (swap, from starting state of item==none), move right and compare
+#if item at right bigger: switch and flag (swap, light on, move left, swap)
+#if not bigger, put back (move left, swap)
+#move right and repeat
+#starts at left - when cannot go right any further, check for light on
+#if at end and light on, switch light off, go left till beginning
+#if at end and light off, we are done - return list
+
+
+
+    # def sort(self):
+    #     """
+    #     Sort the robot's list.
+    #     """
+    #     while self.can_move_right(): #loop runs for each pass through list
+    #         self.swap_item()
+    #         self.move_right()
+    #         if self.compare_item() == 1:
+    #             self.swap_item()
+    #             self.set_light_on()
+    #         self.move_left()
+    #         self.swap_item()
+    #         self.move_right()
+    #     if self.light_is_on(): #runs when last position reached (cannot move right)
+    #         self.set_light_off()
+    #         while self.can_move_left(): #loop returns position to zero
+    #             self.move_left()
+    #         self.sort() #recursion time, above lines ensure called w/ position zero and light off
+    #     else:
+    #         return self._list
+
+
+
+
+    ######## ALTERNATE SORTING ALGORITHM - SELECTION SORT ########
+
+
     def sort(self):
-        """
-        Sort the robot's list.
-        """
-        # Fill this out
-        pass
+        # start with no card and at leftmost end of search range
+        # pick up card from current space
+        self.swap_item()
+
+        # turn light on - light means we are holding card -- maybe we don't need this step? SKIPPED FOR NOW
+
+        # move right
+        # if our card is bigger, swap - ours is now lower
+        # continue moving right and trading for lowest card
+        while self.can_move_right():  # we are always holding some card during this loop
+            self.move_right() 
+            if self.compare_item() == 1:
+                self.swap_item()
+                   
+       
+        # when reach the end, go left
+        # self.move_left()
+
+        # compare - if not none, move left again
+        # when comparison is none, we're at the empty space - swap to put our card down
+        # while self.compare_item() != None:
+        #     self.move_left() 
+        # self.swap_item()
+
+        while True:
+            self.move_left()
+            if self.compare_item() is None:
+                self.swap_item()
+                break
+        
+
+        # move right
+        # check to see if we can move right again
+        # if we can move right again, recurse to top
+        # if we cannot move right, we've just compared the last two cards and we're done
+
+        self.move_right()        
+        if self.can_move_right():
+            self.sort()
+        else:
+            return self._list
+
+
+
+
+
+
+
 
 
 if __name__ == "__main__":
@@ -110,3 +195,5 @@ if __name__ == "__main__":
 
     robot.sort()
     print(robot._list)
+
+    
